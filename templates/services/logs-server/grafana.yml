@@ -1,0 +1,35 @@
+include:
+  - ./templates/networks.yml
+
+services:
+  grafana:
+    image: docker.io/grafana/grafana:11.5.1
+    container_name: grafana
+    env_file:
+      - ./services/logs-server/grafana/.env.local
+    volumes:
+      - ./volumes/logs-server/grafana/datasources.yml:/etc/grafana/provisioning/datasources/default.yml:ro
+      - ./volumes/logs-server/grafana/dashboards.yml:/var/lib/grafana/dashboards.yml:ro
+      - grafana-data:/var/lib/grafana:rw
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+        limits:
+          memory: "${SERVICE_LOGS_SERVER_GRAFANA_MEMORY_LIMITS:?}"
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fsSI http://127.0.0.1:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    networks:
+      - home-network
+    restart: unless-stopped
+
+volumes:
+  grafana-data:

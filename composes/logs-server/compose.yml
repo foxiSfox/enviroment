@@ -1,0 +1,7 @@
+name: home-logs-server
+
+include:
+  - project_directory: .
+    path:
+      - ./templates/services/logs-server/grafana.yml
+      - ./templates/services/logs-server/prometheus.yml

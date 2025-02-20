@@ -1,0 +1,27 @@
+include:
+  - ./templates/networks.yml
+
+services:
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    container_name: prometheus
+    env_file:
+      - ./services/logs-server/prometheus/.env.local
+    volumes:
+      - prometheus-data:/prometheus:rw
+      - ./volumes/logs-server/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -S http://127.0.0.1:9090/status || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    expose:
+      - 9090
+    ports:
+      - "9090:9090"
+    networks:
+      - home-network
+    restart: unless-stopped
+
+volumes:
+  prometheus-data:
