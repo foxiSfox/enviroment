@@ -10,6 +10,13 @@ services:
     volumes:
       - prometheus-data:/prometheus:rw
       - ./volumes/logs-server/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+        limits:
+          memory: "${SERVICE_LOGS_SERVER_PROMETHEUS_MEMORY_LIMITS:?}"
     healthcheck:
       test: ["CMD-SHELL", "wget --spider -S http://127.0.0.1:9090/status || exit 1"]
       interval: 10s
