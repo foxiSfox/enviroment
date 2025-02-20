@@ -1,0 +1,6 @@
+name: home-gateway
+
+include:
+  - project_directory: .
+    path:
+      - ./templates/services/gateway/nginx-proxy-manager.yml

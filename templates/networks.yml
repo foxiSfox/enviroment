@@ -1,0 +1,8 @@
+networks:
+  home-network:
+    name: home-network
+    ipam:
+      driver: default
+      config:
+        - subnet: ${HOME_SUBNET}
+          gateway: ${HOME_GATEWAY}

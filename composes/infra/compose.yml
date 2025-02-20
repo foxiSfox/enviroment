@@ -1,0 +1,6 @@
+name: home-infra
+
+include:
+  - project_directory: .
+    path:
+      - ./templates/services/infra/plex.yml

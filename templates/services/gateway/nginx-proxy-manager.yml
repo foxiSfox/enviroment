@@ -1,0 +1,30 @@
+include:
+  - ./templates/networks.yml
+
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:2.12.3
+    container_name: nginx-proxy-manager
+    env_file:
+      - ./services/gateway/nginx-proxy-manager/.env.local
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+        limits:
+          memory: "${SERVICE_GATEWAY_NGINX_PROXY_MANAGER_MEMORY_LIMITS:?}"
+    expose:
+      - 80
+      - 443
+      - 81
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    volumes:
+      - ./volumes/gateway/nginx-proxy-manager/data:/data
+      - ./volumes/gateway/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    networks:
+      - home-network
+    restart: unless-stopped
