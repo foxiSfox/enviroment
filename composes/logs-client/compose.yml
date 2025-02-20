@@ -1,0 +1,7 @@
+name: home-logs-client
+
+include:
+  - project_directory: .
+    path:
+      - ./templates/services/logs-client/node-exporter.yml
+      - ./templates/services/logs-client/cadvisor.yml

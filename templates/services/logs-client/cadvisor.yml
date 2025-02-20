@@ -1,0 +1,41 @@
+include:
+  - ./templates/networks.yml
+
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.2
+    container_name: cadvisor
+    env_file:
+      - ./services/logs-client/cadvisor/.env.local
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    command:
+      - --housekeeping_interval=15s
+      - --docker_only
+      - --disable_metrics=advtcp,cpu_topology,cpuset,hugetlb,memory_numa,process,referenced_memory,resctrl,sched,tcp,udp,percpu,disk,diskIO
+    devices:
+      - /dev/kmsg
+    privileged: true
+    healthcheck:
+      test: [ "CMD-SHELL", "nc -zv 127.0.0.1 8080 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+        limits:
+          memory: "${SERVICE_LOGS_CLIENT_CADVISOR_MEMORY_LIMITS:?}"
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - home-network
+    restart: unless-stopped

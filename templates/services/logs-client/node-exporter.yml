@@ -1,0 +1,37 @@
+include:
+  - ./templates/networks.yml
+
+services:
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    container_name: node-exporter
+    env_file:
+      - ./services/logs-client/node-exporter/.env.local
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - --path.procfs=/host/proc
+      - --path.rootfs=/rootfs
+      - --path.sysfs=/host/sys
+      - --collector.filesystem.mount-points-exclude="^/(sys|proc|dev|host|etc)($$|/)"
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+        limits:
+          memory: "${SERVICE_LOGS_CLIENT_NODE_EXPORTER_MEMORY_LIMITS:?}"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --spider -S http://127.0.0.1:9100 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    expose:
+      - 9100
+    ports:
+      - "9100:9100"
+    networks:
+      - home-network
+    restart: unless-stopped
