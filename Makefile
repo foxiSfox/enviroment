@@ -1,4 +1,11 @@
+include .env
+
 PROJECT_DIR=.
+
+COMPOSE_GATEWAY=composes/gateway/compose.yml
+COMPOSE_INFRA=composes/infra/compose.yml
+COMPOSE_LOGS_CLIENT=composes/logs-client/compose.yml
+COMPOSE_LOGS_SERVER=composes/logs-server/compose.yml
 
 default: help
 
@@ -37,29 +44,37 @@ reset: reset-gateway reset-infra reset-logs-client reset-logs-server
 
 # Команды для запуска отдельных сервисов
 up-gateway:
-	docker compose --project-directory=$(PROJECT_DIR) -f composes/gateway/compose.yml up -d
+	@if [ "$$(echo $(RUN_GATEWAY))" -eq "1" ]; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_GATEWAY} up -d; \
+	fi
 
 up-infra:
-	docker compose --project-directory=$(PROJECT_DIR) -f composes/infra/compose.yml up -d
+	@if [ "$$(echo $(RUN_INFRA))" -eq "1" ]; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_INFRA} up -d; \
+	fi
 
 up-logs-client:
-	docker compose --project-directory=$(PROJECT_DIR) -f composes/logs-client/compose.yml up -d
+	@if [ "$$(echo $(RUN_LOGS_CLIENT))" -eq "1" ]; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_CLIENT} up -d; \
+	fi
 
 up-logs-server:
-	docker compose --project-directory=$(PROJECT_DIR) -f composes/logs-server/compose.yml up -d
+	@if [ "$$(echo $(RUN_LOGS_SERVER))" -eq "1" ]; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_SERVER} up -d; \
+	fi
 
 # Команды для остановки отдельных сервисов
 down-gateway:
-	docker compose --project-directory=$(PROJECT_DIR) -f composes/gateway/compose.yml down
+	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_GATEWAY} down
 
 down-infra:
-	docker compose --project-directory=$(PROJECT_DIR) -f composes/infra/compose.yml down
+	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_INFRA} down
 
 down-logs-client:
-	docker compose --project-directory=$(PROJECT_DIR) -f composes/logs-client/compose.yml down
+	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_CLIENT} down
 
 down-logs-server:
-	docker compose --project-directory=$(PROJECT_DIR) -f composes/logs-server/compose.yml down
+	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_SERVER} down
 
 # Команды для перезапуска отдельных сервисов
 reset-gateway: down-gateway up-gateway
