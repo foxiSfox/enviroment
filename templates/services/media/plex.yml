@@ -4,16 +4,16 @@ services:
     container_name: plex
     network_mode: host
     env_file:
-      - ./services/infra/plex/.env.local
+      - ./services/media/plex/.env.local
     deploy:
       resources:
         reservations:
           cpus: '0.25'
           memory: 128M
         limits:
-          memory: "${SERVICE_INFRA_PLEX_MEMORY_LIMITS:?}"
+          memory: "${SERVICE_MEDIA_PLEX_MEMORY_LIMITS:?}"
     volumes:
-      - ./volumes/infra/plex/transcode:/transcode
-      - ./volumes/infra/plex/config:/config
-      - ${INFRA_PLEX_SMB_DIR:?}:/data
+      - ./volumes/media/plex/transcode:/transcode
+      - ./volumes/media/plex/config:/config
+      - ${MEDIA_PLEX_SMB_DIR:?}:/data
     restart: unless-stopped

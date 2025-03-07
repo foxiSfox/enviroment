@@ -1,0 +1,6 @@
+name: home-media
+
+include:
+  - project_directory: .
+    path:
+      - ./templates/services/media/plex.yml

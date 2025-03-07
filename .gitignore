@@ -5,5 +5,5 @@
 
 /volumes/gateway/nginx-proxy-manager/*
 !/volumes/gateway/nginx-proxy-manager/.gitkeep
-/volumes/infra/plex/*
-!/volumes/infra/plex/.gitkeep
+/volumes/media/plex/*
+!/volumes/media/plex/.gitkeep
