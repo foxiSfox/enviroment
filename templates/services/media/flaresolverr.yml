@@ -1,0 +1,22 @@
+include:
+  - ./templates/networks.yml
+
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    env_file:
+      - ./services/media/flaresolverr/.env.local
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+        limits:
+          memory: "${SERVICE_MEDIA_FLARESOLVERR_MEMORY_LIMITS:?}"
+    expose:
+      - 8191
+      - 8192
+    networks:
+      - home-network
+    restart: unless-stopped

@@ -7,3 +7,13 @@
 !/volumes/gateway/nginx-proxy-manager/.gitkeep
 /volumes/media/plex/*
 !/volumes/media/plex/.gitkeep
+/volumes/media/dev_common/media/movies/*
+!/volumes/media/dev_common/media/movies/.gitkeep
+/volumes/media/dev_common/media/serials/*
+!/volumes/media/dev_common/media/serials/.gitkeep
+/volumes/media/dev_common/torrents/movies/*
+!/volumes/media/dev_common/torrents/movies/.gitkeep
+/volumes/media/dev_common/torrents/serials/*
+!/volumes/media/dev_common/torrents/serials/.gitkeep
+/volumes/media/dev_common/torrents/complete
+/volumes/media/dev_common/torrents/incomplete

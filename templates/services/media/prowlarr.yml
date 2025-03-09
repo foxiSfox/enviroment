@@ -1,0 +1,26 @@
+include:
+  - ./templates/networks.yml
+  - ./templates/volumes-media.yml
+
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:1.31.2.4975-ls107
+    container_name: prowlarr
+    env_file:
+      - ./services/media/prowlarr/.env.local
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+        limits:
+          memory: "${SERVICE_MEDIA_PROWLARR_MEMORY_LIMITS:?}"
+    volumes:
+      - prowlarr-config:/config
+    expose:
+      - 9696
+    ports:
+      - ${MEDIA_PROWLARR_PORT:?}:9696
+    networks:
+      - home-network
+    restart: unless-stopped

@@ -1,0 +1,27 @@
+include:
+  - ./templates/networks.yml
+  - ./templates/volumes-media.yml
+
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:5.19.3.9730-ls261
+    container_name: radarr
+    env_file:
+      - ./services/media/radarr/.env.local
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+        limits:
+          memory: "${SERVICE_MEDIA_RADARR_MEMORY_LIMITS:?}"
+    volumes:
+      - radarr-config:/config
+      - ${MEDIA_PLEX_SMB_DIR:?}:/data
+    expose:
+      - 7878
+    ports:
+      - ${MEDIA_RADARR_PORT:?}:7878
+    networks:
+      - home-network
+    restart: unless-stopped

@@ -1,0 +1,31 @@
+include:
+  - ./templates/networks.yml
+  - ./templates/volumes-media.yml
+
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:5.0.4
+    container_name: qbittorrent
+    env_file:
+      - ./services/media/qbittorrent/.env.local
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+        limits:
+          memory: "${SERVICE_MEDIA_QBITTORRENT_MEMORY_LIMITS:?}"
+    volumes:
+      - ./services/media/qbittorrent/rootfs/config/qBittorrent/categories.json:/config/qBittorrent/categories.json
+      - ./services/media/qbittorrent/rootfs/config/qBittorrent/qBittorrent.conf:/config/qBittorrent/qBittorrent.conf
+      - qbittorrent-config:/config
+      - ${MEDIA_PLEX_SMB_DIR:?}:/data
+    expose:
+      - 8080
+      - 6881
+    ports:
+      - ${MEDIA_QBITTORRENT_PORT:?}:8080
+    networks:
+      - home-network
+    restart: unless-stopped
+

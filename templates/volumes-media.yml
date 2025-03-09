@@ -1,0 +1,5 @@
+volumes:
+  qbittorrent-config: {}
+  prowlarr-config: {}
+  radarr-config: {}
+  sonarr-config: {}

@@ -45,22 +45,22 @@ reset: reset-gateway reset-infra reset-logs-client reset-logs-server
 # Команды для запуска отдельных сервисов
 up-gateway:
 	@if [ "$$(echo $(RUN_GATEWAY))" -eq "1" ]; \
-	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_GATEWAY} up -d; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_GATEWAY} up -d --build; \
 	fi
 
 up-media:
 	@if [ "$$(echo $(RUN_MEDIA))" -eq "1" ]; \
-	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_MEDIA} up -d; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_MEDIA} up -d --build; \
 	fi
 
 up-logs-client:
 	@if [ "$$(echo $(RUN_LOGS_CLIENT))" -eq "1" ]; \
-	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_CLIENT} up -d; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_CLIENT} up -d --build; \
 	fi
 
 up-logs-server:
 	@if [ "$$(echo $(RUN_LOGS_SERVER))" -eq "1" ]; \
-	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_SERVER} up -d; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_SERVER} up -d --build; \
 	fi
 
 # Команды для остановки отдельных сервисов

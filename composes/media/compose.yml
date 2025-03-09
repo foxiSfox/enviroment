@@ -4,3 +4,8 @@ include:
   - project_directory: .
     path:
       - ./templates/services/media/plex.yml
+      - ./templates/services/media/qbittorrent.yml
+      - ./templates/services/media/radarr.yml
+      - ./templates/services/media/sonarr.yml
+      - ./templates/services/media/prowlarr.yml
+      - ./templates/services/media/flaresolverr.yml
