@@ -8,6 +8,12 @@ services:
     container_name: sonarr
     env_file:
       - ./services/media/sonarr/.env.local
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:8989/ping || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     deploy:
       resources:
         reservations:
