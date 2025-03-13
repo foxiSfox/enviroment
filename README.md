@@ -29,7 +29,7 @@
 
 ### Настройка Radarr
 1. Перейти в Settings->Media Manager и сделать следующие настройки:
-   - включить "Radarr will use the existing file name if renaming is disabled"
+   - включить "Rename Movies"
    - добавить Root Folder: /data/media/movies
 2. Перейти в Setting->Quality и настроить по своим предпочтениям.
 3. Перейти в Settings->Profiles, и настроить профиль (все ненужно можно удалить)
