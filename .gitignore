@@ -5,6 +5,7 @@
 
 /volumes/gateway/nginx-proxy-manager/*
 !/volumes/gateway/nginx-proxy-manager/.gitkeep
+!/volumes/gateway/nginx-proxy-manager/custom
 /volumes/media/plex/*
 !/volumes/media/plex/.gitkeep
 /volumes/media/dev_common/media/movies/*

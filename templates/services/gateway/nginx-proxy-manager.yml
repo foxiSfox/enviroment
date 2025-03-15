@@ -8,8 +8,9 @@ services:
     env_file:
       - ./services/gateway/nginx-proxy-manager/.env.local
     volumes:
-      - ./volumes/gateway/nginx-proxy-manager/data:/data
-      - ./volumes/gateway/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+      - ./volumes/gateway/nginx-proxy-manager/data:/data:rw
+      - ./volumes/gateway/nginx-proxy-manager/custom:/data/nginx/custom:rw
+      - ./volumes/gateway/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
     deploy:
       resources:
         reservations:

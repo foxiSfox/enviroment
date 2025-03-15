@@ -29,9 +29,14 @@ help:
 	@echo "  make reset-logs-client - 🔁 Перезапустить logs-client сервис"
 	@echo "  make reset-logs-server - 🔁 Перезапустить logs-server сервис"
 	@echo "\nПрочее:"
+	@echo "  make run-script script=<script_name> - 📝 Запустить скрипт из директории scripts (cloudflare)"
 	@echo "  make clean             - 🧹 Очистить неиспользуемые Docker-объекты"
 	@echo "  make ps-short          - 📋 Показать запущенные контейнеры в кратком виде"
 
+# Запустить скрипт
+run-script:
+	@chmod +x scripts/$(script).sh
+	@bash scripts/$(script).sh
 
 # Запустить все сервисы
 up: up-gateway up-media up-logs-client up-logs-server
