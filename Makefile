@@ -25,7 +25,7 @@ help:
 	@echo "  make down-logs-client  - ⏹️  Остановить logs-client сервис"
 	@echo "  make down-logs-server  - ⏹️  Остановить logs-server сервис"
 	@echo "  make reset-gateway     - 🔁 Перезапустить gateway сервис"
-	@echo "  make reset-infra       - 🔁 Перезапустить infra сервис"
+	@echo "  make reset-media       - 🔁 Перезапустить media сервис"
 	@echo "  make reset-logs-client - 🔁 Перезапустить logs-client сервис"
 	@echo "  make reset-logs-server - 🔁 Перезапустить logs-server сервис"
 	@echo "\nПрочее:"
@@ -84,7 +84,7 @@ down-logs-server:
 # Команды для перезапуска отдельных сервисов
 reset-gateway: down-gateway up-gateway
 
-reset-infra: down-media up-media
+reset-media: down-media up-media
 
 reset-logs-client: down-logs-client up-logs-client
 
