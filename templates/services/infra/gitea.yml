@@ -1,0 +1,27 @@
+include:
+  - ./templates/networks.yml
+
+services:
+  gitea:
+    image: docker.gitea.com/gitea:1.23.5
+    container_name: gitea
+    env_file:
+      - ./services/infra/gitea/.env.local
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+        limits:
+          memory: "${SERVICE_INFRA_GITEA_MEMORY_LIMITS:?}"
+    volumes:
+      - gitea-data:/data
+    ports:
+      - ${INFRA_GITEA_HTTP_PORT}:3000
+      - ${INFRA_GITEA_SSH_PORT}:22
+    networks:
+      - home-network
+    restart: always
+
+volumes:
+  gitea-data: {}

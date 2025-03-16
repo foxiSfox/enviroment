@@ -4,6 +4,7 @@ PROJECT_DIR=.
 
 COMPOSE_GATEWAY=composes/gateway/compose.yml
 COMPOSE_MEDIA=composes/media/compose.yml
+COMPOSE_INFRA=composes/infra/compose.yml
 COMPOSE_LOGS_CLIENT=composes/logs-client/compose.yml
 COMPOSE_LOGS_SERVER=composes/logs-server/compose.yml
 
@@ -18,14 +19,17 @@ help:
 	@echo "\nУправление отдельными сервисами:"
 	@echo "  make up-gateway        - ▶️  Запустить gateway сервис"
 	@echo "  make up-media          - ▶️  Запустить media сервис"
+	@echo "  make up-infra          - ▶️  Запустить infra сервис"
 	@echo "  make up-logs-client    - ▶️  Запустить logs-client сервис"
 	@echo "  make up-logs-server    - ▶️  Запустить logs-server сервис"
 	@echo "  make down-gateway      - ⏹️  Остановить gateway сервис"
 	@echo "  make down-media        - ⏹️  Остановить media сервис"
+	@echo "  make down-infra        - ⏹️  Остановить infra сервис"
 	@echo "  make down-logs-client  - ⏹️  Остановить logs-client сервис"
 	@echo "  make down-logs-server  - ⏹️  Остановить logs-server сервис"
 	@echo "  make reset-gateway     - 🔁 Перезапустить gateway сервис"
 	@echo "  make reset-media       - 🔁 Перезапустить media сервис"
+	@echo "  make reset-infra       - 🔁 Перезапустить infra сервис"
 	@echo "  make reset-logs-client - 🔁 Перезапустить logs-client сервис"
 	@echo "  make reset-logs-server - 🔁 Перезапустить logs-server сервис"
 	@echo "\nПрочее:"
@@ -39,10 +43,10 @@ run-script:
 	@bash scripts/$(script).sh
 
 # Запустить все сервисы
-up: up-gateway up-media up-logs-client up-logs-server
+up: up-gateway up-media up-infra up-logs-client up-logs-server
 
 # Остановить все сервисы
-down: down-gateway down-media down-logs-client down-logs-server
+down: down-gateway down-media down-infra down-logs-client down-logs-server
 
 # Перезапустить все сервисы
 reset: reset-gateway reset-infra reset-logs-client reset-logs-server
@@ -56,6 +60,11 @@ up-gateway:
 up-media:
 	@if [ "$$(echo $(RUN_MEDIA))" -eq "1" ]; \
 	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_MEDIA} up -d --build; \
+	fi
+
+up-infra:
+	@if [ "$$(echo $(RUN_INFRA))" -eq "1" ]; \
+	then docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_INFRA} up -d --build; \
 	fi
 
 up-logs-client:
@@ -75,6 +84,9 @@ down-gateway:
 down-media:
 	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_MEDIA} down
 
+down-infra:
+	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_INFRA}
+
 down-logs-client:
 	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_CLIENT} down
 
@@ -85,6 +97,8 @@ down-logs-server:
 reset-gateway: down-gateway up-gateway
 
 reset-media: down-media up-media
+
+reset-infra: down-infra up-infra
 
 reset-logs-client: down-logs-client up-logs-client
 
