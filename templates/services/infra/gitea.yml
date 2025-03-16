@@ -21,7 +21,7 @@ services:
       - ${INFRA_GITEA_SSH_PORT}:22
     networks:
       - home-network
-    restart: always
+    restart: unless-stopped
 
 volumes:
   gitea-data: {}
