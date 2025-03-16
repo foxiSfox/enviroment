@@ -6,6 +6,7 @@
    ```.env
    # Run
    RUN_GATEWAY=0
+   RUN_INFRA=0
    RUN_MEDIA=1
    RUN_LOGS_CLIENT=0
    RUN_LOGS_SERVER=0 
