@@ -85,7 +85,7 @@ down-media:
 	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_MEDIA} down
 
 down-infra:
-	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_INFRA}
+	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_INFRA} down
 
 down-logs-client:
 	docker compose --project-directory=$(PROJECT_DIR) -f ${COMPOSE_LOGS_CLIENT} down
