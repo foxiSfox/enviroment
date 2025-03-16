@@ -49,7 +49,7 @@ up: up-gateway up-media up-infra up-logs-client up-logs-server
 down: down-gateway down-media down-infra down-logs-client down-logs-server
 
 # Перезапустить все сервисы
-reset: reset-gateway reset-infra reset-logs-client reset-logs-server
+reset: reset-gateway reset-media reset-infra reset-logs-client reset-logs-server
 
 # Команды для запуска отдельных сервисов
 up-gateway:
