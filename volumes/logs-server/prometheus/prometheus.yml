@@ -41,6 +41,6 @@ scrape_configs:
 
   - job_name: 'cadvisor-observability'
     static_configs:
-      - targets: ['cadvisor:9200']
+      - targets: ['cadvisor:8080']
         labels:
           instance: 'proxy'
