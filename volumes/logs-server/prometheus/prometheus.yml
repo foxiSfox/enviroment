@@ -6,3 +6,41 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
+        labels:
+          instance: 'prometheus'
+
+  - job_name: 'node-exporter-proxy'
+    static_configs:
+      - targets: ['192.168.1.62:9100']
+        labels:
+          instance: 'proxy'
+
+  - job_name: 'cadvisor-proxy'
+    static_configs:
+      - targets: ['192.168.1.62:9200']
+        labels:
+          instance: 'proxy'
+
+  - job_name: 'node-exporter-infra'
+    static_configs:
+      - targets: ['192.168.1.105:9100']
+        labels:
+          instance: 'infra'
+
+  - job_name: 'cadvisor-infra'
+    static_configs:
+      - targets: ['192.168.1.105:9200']
+        labels:
+          instance: 'proxy'
+
+  - job_name: 'node-exporter-observability'
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          instance: 'observability'
+
+  - job_name: 'cadvisor-observability'
+    static_configs:
+      - targets: ['cadvisor:9200']
+        labels:
+          instance: 'proxy'

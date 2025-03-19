@@ -22,7 +22,7 @@ services:
           cpus: '0.25'
           memory: 64M
         limits:
-          memory: "${SERVICE_LOGS_CLIENT_NODE_EXPORTER_MEMORY_LIMITS:?}"
+          memory: "${LOGS_CLIENT_NODE_EXPORTER_MEMORY_LIMITS:?}"
     healthcheck:
       test: [ "CMD-SHELL", "wget --spider -S http://127.0.0.1:9100 || exit 1" ]
       interval: 10s
@@ -31,7 +31,7 @@ services:
     expose:
       - 9100
     ports:
-      - "9100:9100"
+      - ${LOGS_CLIENT_NODE_EXPORTER_PORT:?}:9100
     networks:
       - home-network
     restart: unless-stopped
