@@ -9,7 +9,7 @@ services:
       - ./services/logs-server/prometheus/.env.local
     volumes:
       - prometheus-data:/prometheus:rw
-      - ./volumes/logs-server/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./volumes/logs-server/prometheus:/etc/prometheus:ro
     deploy:
       resources:
         reservations:

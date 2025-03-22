@@ -18,3 +18,4 @@
 !/volumes/media/dev_common/torrents/serials/.gitkeep
 /volumes/media/dev_common/torrents/complete
 /volumes/media/dev_common/torrents/incomplete
+/volumes/logs-server/prometheus/*.example
