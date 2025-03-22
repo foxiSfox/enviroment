@@ -35,3 +35,14 @@
 2. Перейти в Setting->Quality и настроить по своим предпочтениям.
 3. Перейти в Settings->Profiles, и настроить профиль (все ненужно можно удалить)
 4. Перейти в Settings->Download Client и настроить его.
+
+
+## Настройка Logs-Server
+
+### Настройка Prometheus
+
+Если у вас есть запущенные node-exporter и cadvisor, нужно создать файлы (на основе examples в той же директории):
+- volumes/logs-server/prometheus/cadvisor.yml
+- volumes/logs-server/prometheus/node-exporter.yml
+
+
