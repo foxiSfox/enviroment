@@ -1,0 +1,11 @@
+- targets: ['ip:port']
+  labels:
+    instance: 'proxy'
+
+- targets: ['ip:port']
+  labels:
+    instance: 'infra'
+
+- targets: ['ip:port']
+  labels:
+    instance: 'observability'
