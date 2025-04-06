@@ -1,0 +1,31 @@
+include:
+  - ./templates/networks.yml
+
+services:
+  smartctl-exporter:
+    image: prometheuscommunity/smartctl-exporter:v0.13.0
+    container_name: smartctl-exporter
+    privileged: true
+    user: root
+    platform: ${LOGS_CLIENT_SMARTCTL_EXPORTER_PLATFORM:?}
+    env_file:
+      - ./services/logs-client/smartctl-exporter/.env.local
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+        limits:
+          memory: "${LOGS_CLIENT_SMARTCTL_EXPORTER_MEMORY_LIMITS:?}"
+    healthcheck:
+      test: [ "CMD-SHELL", "nc -zv 127.0.0.1 9633 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    expose:
+      - 9633
+    ports:
+      - ${LOGS_CLIENT_SMARTCTL_EXPORTER_PORT:?}:9633
+    networks:
+      - home-network
+    restart: unless-stopped

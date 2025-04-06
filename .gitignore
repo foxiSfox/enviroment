@@ -20,4 +20,5 @@
 /volumes/media/dev_common/torrents/incomplete
 /volumes/logs-server/prometheus/cadvisor.yml
 /volumes/logs-server/prometheus/node-exporter.yml
+/volumes/logs-server/prometheus/smartctl-exporter.yml
 

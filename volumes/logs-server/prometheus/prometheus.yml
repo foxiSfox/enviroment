@@ -18,3 +18,8 @@ scrape_configs:
     file_sd_configs:
       - files:
           - 'cadvisor.yml'
+
+  - job_name: 'smartctl-exporter'
+    file_sd_configs:
+      - files:
+          - 'smartctl-exporter.yml'

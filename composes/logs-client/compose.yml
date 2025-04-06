@@ -5,3 +5,4 @@ include:
     path:
       - ./templates/services/logs-client/node-exporter.yml
       - ./templates/services/logs-client/cadvisor.yml
+      - ./templates/services/logs-client/smartctl-exporter.yml
