@@ -1,6 +1,6 @@
 services:
   plex:
-    image: plexinc/pms-docker:1.42.1.10060-4e8b05daf
+    image: plexinc/pms-docker:1.41.3.9314-a0bfb8370
     container_name: plex
     network_mode: host
     env_file:
