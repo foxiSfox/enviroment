@@ -42,3 +42,25 @@
 If you have `node-exporter` and `cadvisor` running, create the following files (based on the examples in the same directory):
 - `volumes/logs-server/prometheus/cadvisor.yml`
 - `volumes/logs-server/prometheus/node-exporter.yml`  
+
+
+## Time Machine Backup Service
+The template `templates/services/backup/timemachine.yml` spins up a Samba-based server that advertises itself over Bonjour for macOS Time Machine clients.
+
+### Networking
+- Uses `network_mode: host` to broadcast mDNS/Bonjour without extra Avahi setup. Expose ports manually if you prefer stricter firewall rules.
+
+### Environment Variables
+- `AVAHI_NAME` controls the visible host name in Finder/Time Machine.
+- `MODEL` should stay on a supported Apple identifier such as `TimeCapsule` so the service is recognised correctly.
+- `ACCOUNT_backup`, `UID_backup`, and `GID_backup` define the login credentials and numeric IDs for the backup user; adjust them to match your host.
+- `SAMBA_CONF_LOG_LEVEL` keeps Samba logs at level 1 for easier debugging without noise.
+
+### Time Machine Share Configuration
+- `SAMBA_VOLUME_CONFIG_timemachine` declares the Time Machine share. It mounts user-specific folders under `/shares/timemachine/%U` and enables the required `fruit:time machine = yes` flag.
+- Set `fruit:time machine max size` to the quota you want (e.g. `500G`, `2T`).
+- Keep the recommended macOS compatibility directives (`fruit:aapl`, `fruit:metadata`, `ea support`) to preserve extended attributes.
+
+### Volumes
+- Map a host path (for example `/Users/<user>/backups:/shares/timemachine`) to persist backups.
+- Optionally mount an Avahi services directory to publish additional Bonjour records.
