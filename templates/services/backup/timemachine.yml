@@ -3,17 +3,12 @@ services:
     image: ghcr.io/servercontainers/samba:a3.22.1-s4.21.4-r4
     container_name: timemachine
     network_mode: host
+    env_file:
+      - ./services/backup/timemachine/.env.local
     environment:
-      AVAHI_NAME: 'TimeMachineServer'
-      MODEL: 'TimeCapsule'
-      SAMBA_CONF_LOG_LEVEL: '1'
-      ACCOUNT_backup: '${BACKUP_TIMEMACHINE_PASSWORD}'
-      UID_backup: '${BACKUP_PUID}'
-      GID_backup: '${BACKUP_PGID}'
       SAMBA_VOLUME_CONFIG_timemachine: |
         [TimeMachine]
         path = /shares/timemachine/%U
-        comment = Time Machine Backup
         valid users = backup
         guest ok = no
         read only = no

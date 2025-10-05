@@ -1,0 +1,46 @@
+services:
+  timemachine:
+    image: ghcr.io/servercontainers/samba:latest
+    container_name: timemachine
+    restart: unless-stopped
+
+    # Упрощает mDNS/Bonjour (Avahi) и SMB; безопаснее публиковать порты явно,
+    # но для TM host network сильно экономит нервы.
+    network_mode: host
+
+    environment:
+      # Как устройство будет называться в сети (Finder/Time Machine)
+      AVAHI_NAME: "TimeMachine-Server"
+      MODEL: "TimeCapsule" # корректная модель для Bonjour
+      SAMBA_CONF_LOG_LEVEL: "1"
+
+      # Пользователь(и) для доступа с macOS
+      # логин: пароль; UID/GID подставь свои при желании
+      ACCOUNT_backup: "1111111"
+      UID_backup: "1000"
+      GID_backup: "1000"
+
+      # Конфиг шары с поддержкой Time Machine
+      # fruit:time machine = yes — обязательный флаг для TM по SMB
+      # fruit:time machine max size — «квота» для бэкапа (можно 500G/2T и т.д.)
+      SAMBA_VOLUME_CONFIG_timemachine: |
+        [TimeMachine]
+        path = /shares/timemachine/%U
+        comment = Time Machine Backup
+        valid users = backup
+        guest ok = no
+        read only = no
+        browseable = yes
+        vfs objects = catia fruit streams_xattr acl_xattr
+        fruit:time machine = yes
+        fruit:time machine max size = 500G
+        # Рекомендованные настройки совместимости с macOS
+        fruit:aapl = yes
+        fruit:metadata = stream
+        ea support = yes
+
+    volumes:
+      # Точка монтирования на хосте -> внутрь контейнера
+      - /Users/pavel/Projects/inside/infra/deploy/test:/shares/timemachine
+      # Avahi service directory (опционально; удобно для кастомных объявлений)
+      # - /etc/avahi/services/:/external/avahi:ro
