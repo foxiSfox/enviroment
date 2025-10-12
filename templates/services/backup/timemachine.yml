@@ -1,24 +1,14 @@
 services:
   timemachine:
-    image: ghcr.io/servercontainers/samba:a3.22.1-s4.21.4-r4
+    image: mbentley/timemachine:smb-20251012
     container_name: timemachine
-    network_mode: host
     env_file:
       - ./services/backup/timemachine/.env.local
-    environment:
-      SAMBA_VOLUME_CONFIG_timemachine: |
-        [TimeMachine]
-        path = /shares/timemachine/%U
-        valid users = backup
-        guest ok = no
-        read only = no
-        browseable = yes
-        vfs objects = catia fruit streams_xattr acl_xattr
-        fruit:time machine = yes
-        fruit:time machine max size = 1T
-        fruit:aapl = yes
-        fruit:metadata = stream
-        ea support = yes
+    network_mode: "host"
+    volumes:
+      - ${BACKUP_TIMEMACHINE_SMB_DIR:?}:/opt/timemachine
+    tmpfs:
+      - /run/samba
     deploy:
       resources:
         reservations:
@@ -26,6 +16,4 @@ services:
           memory: 256M
         limits:
           memory: "${SERVICE_BACKUP_TIMEMACHINE_MEMORY_LIMITS:?}"
-    volumes:
-      - ${BACKUP_TIMEMACHINE_SMB_DIR:?}:/shares/timemachine
     restart: unless-stopped
