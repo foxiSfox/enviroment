@@ -3,3 +3,4 @@ volumes:
   prowlarr-config: {}
   radarr-config: {}
   sonarr-config: {}
+  yt-scout-data: {}

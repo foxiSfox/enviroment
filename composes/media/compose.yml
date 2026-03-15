@@ -9,3 +9,4 @@ include:
       - ./templates/services/media/sonarr.yml
       - ./templates/services/media/prowlarr.yml
       - ./templates/services/media/flaresolverr.yml
+      - ./templates/services/media/yt-scout.yml
