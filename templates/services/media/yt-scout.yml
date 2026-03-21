@@ -4,7 +4,7 @@ include:
 
 services:
   yt-scout:
-    image: foxisfox/yt-scout:0.0.1
+    image: foxisfox/yt-scout:0.0.8
     container_name: yt-scout
     env_file:
       - ./services/media/yt-scout/.env.local
