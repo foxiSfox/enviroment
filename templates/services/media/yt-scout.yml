@@ -23,7 +23,7 @@ services:
           memory: "${SERVICE_MEDIA_YT_SCOUT_MEMORY_LIMITS:?}"
     volumes:
       - yt-scout-data:/app/data
-      - ${MEDIA_PLEX_SMB_DIR:?}/youtube:/downloads
+      - ${MEDIA_PLEX_SMB_DIR:?}/media/youtube:/downloads
     expose:
       - 8000
     ports:
